@@ -2,7 +2,14 @@ const posts = require("../data/posts");
 
 // index
 function index(req, res) {
-    res.json(posts);
+    // res.json(posts);
+    // filter 
+    let filteredPosts = posts
+    if (req.query.tag) {
+        filteredPosts = posts.filter(el=> el.tags.includes(req.query.tag))
+    };
+
+    res.json(filteredPosts);
 };
 
 //show
@@ -13,7 +20,7 @@ function show(req, res) {
     //per id inesistenti
     if (!post) {
         res.status(404);
-        res.send("not found");
+        return res.json({post:"not found"});
     }
 
     res.json(post);
@@ -37,7 +44,7 @@ function destroy(req, res) {
     //per id inesistenti
     if (!post) {
         res.status(404);
-        res.send("not found");
+        return res.json({post:"not found"});
     }
 
     posts.splice(posts.indexOf(post), 1);
