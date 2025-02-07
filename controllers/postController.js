@@ -6,7 +6,7 @@ function index(req, res) {
     // filter 
     let filteredPosts = posts
     if (req.query.tag) {
-        filteredPosts = posts.filter(el=> el.tags.includes(req.query.tag))
+        filteredPosts = posts.filter(el => el.tags.includes(req.query.tag))
     };
 
     res.json(filteredPosts);
@@ -20,7 +20,7 @@ function show(req, res) {
     //per id inesistenti
     if (!post) {
         res.status(404);
-        return res.json({post:"not found"});
+        return res.json({ post: "not found" });
     }
 
     res.json(post);
@@ -31,7 +31,7 @@ function create(req, res) {
     // console.log(req.body);
     //id dell'ultimo + 1
     let newId = posts[posts.length - 1].id + 1;
-    
+
     let newPost = {
         "id": newId,
         "title": req.body.title,
@@ -42,7 +42,7 @@ function create(req, res) {
     // console.log(newPost);
 
     posts.push(newPost)
-    
+
     res.status(201)
     res.json(newPost)
     // res.send("Creazione nuovo post");
@@ -50,7 +50,24 @@ function create(req, res) {
 
 //update
 function update(req, res) {
-    res.send(`Modifica del post ${req.params.id}`);
+    // res.send(`Modifica del post ${req.params.id}`);
+    let post = posts.find((el) => el.id === parseInt(req.params.id));
+
+    //per id inesistenti
+    if (!post) {
+        res.status(404);
+        return res.json({ post: "not found" });
+    }
+
+    post.id = post.id,
+    post.title = req.body.title,
+    post.content = req.body.content,
+    post.image = req.body.image,
+    post.tags = req.body.tags
+
+    res.json(post)
+    // console.log(posts);
+
 };
 
 //destroy
@@ -61,7 +78,7 @@ function destroy(req, res) {
     //per id inesistenti
     if (!post) {
         res.status(404);
-        return res.json({post:"not found"});
+        return res.json({ post: "not found" });
     }
 
     posts.splice(posts.indexOf(post), 1);
