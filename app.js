@@ -51,6 +51,13 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+//routing
+const postRouter = require("./routers/posts.js")
+
+//errors 
+const errorHandler = require("./middleweres/errorsHandler.js")
+const notFound = require("./middleweres/notFound.js")
+
 // general route
 app.get('/', (req, res) => {
 	res.send('Server del mio blog')
@@ -62,16 +69,12 @@ app.use(express.static("public"));
 // Request body
 app.use(express.json());
 
-//routing
-const postRouter = require("./routers/posts.js")
 // new route
 app.use("/posts", postRouter)
 
 //errors 
-const errorHandler = require("./middleweres/errorsHandler.js")
 app.use(errorHandler)
 
-const notFound = require("./middleweres/notFound.js")
 app.use(notFound)
 
 // server
