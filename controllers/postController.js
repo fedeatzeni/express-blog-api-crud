@@ -9,6 +9,9 @@ function index(req, res) {
         filteredPosts = posts.filter(el => el.tags.includes(req.query.tag))
     };
 
+    // error 
+    // throw new Error("errore test")
+
     res.json(filteredPosts);
 };
 
@@ -60,10 +63,10 @@ function update(req, res) {
     }
 
     post.id = post.id,
-    post.title = req.body.title,
-    post.content = req.body.content,
-    post.image = req.body.image,
-    post.tags = req.body.tags
+        post.title = req.body.title,
+        post.content = req.body.content,
+        post.image = req.body.image,
+        post.tags = req.body.tags
 
     res.json(post)
     // console.log(posts);
