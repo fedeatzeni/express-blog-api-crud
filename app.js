@@ -49,6 +49,7 @@ Se viene generato un errore, un middleware si occuperà di rispondere con un mes
 
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const port = 3000;
 
 //routing
@@ -57,6 +58,11 @@ const postRouter = require("./routers/posts.js")
 //errors 
 const errorHandler = require("./middleweres/errorsHandler.js")
 const notFound = require("./middleweres/notFound.js")
+
+// cors
+app.use(cors({
+	origin: 'http://localhost:5173'
+	}));
 
 // general route
 app.get('/', (req, res) => {
